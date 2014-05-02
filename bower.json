@@ -1,6 +1,6 @@
 {
     "name": "angular-segmentio",
-    "version": "2.0.9",
+    "version": "1.3.29",
     "main": "angular-segmentio.js",
     "dependencies": {
         "angular": "~1.2"
