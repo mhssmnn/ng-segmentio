@@ -56,7 +56,7 @@ angular.module('segmentio', ['ng'])
             $rootScope.$on('$viewContentLoaded', function() {
                 if (service.location != $location.path()) {
                     service.location = $location.path();
-                    service.pageview(service.location);
+                    service.page(service.location);
                 }
             });
 
