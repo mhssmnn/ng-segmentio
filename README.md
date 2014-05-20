@@ -26,7 +26,7 @@ function myCtrl($rootScope, $scope, $http, segmentio) {
 ## How-to add it to your project?
 
 Via Twitter Bower (http://bower.io/) 
-Run ``bower install angular-segmentio`` in a terminal
+Run ``bower install ng-segmentio`` in a terminal
 
 ## How-to build / develop it?
 
