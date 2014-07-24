@@ -34,24 +34,26 @@ angular.module('segmentio', ['ng'])
   service.load = function(key) {
     var deferred = $q.defer();
 
-    if (document.getElementById('analytics-js')) return deferred.resolve();
+    if (document.getElementById('analytics-js'))
+      deferred.resolve();
+    else {
+      // Create an async script element based on your key.
+      var script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.id = 'analytics-js';
+      script.async = true;
+      script.src = ('https:' === document.location.protocol
+        ? 'https://' : 'http://')
+        + 'cdn.segment.io/analytics.js/v1/'
+        + key + '/analytics.min.js';
+      script.onload = script.onreadystatechange = function () {
+        deferred.resolve();
+      };
 
-    // Create an async script element based on your key.
-    var script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.id = 'analytics-js';
-    script.async = true;
-    script.src = ('https:' === document.location.protocol
-      ? 'https://' : 'http://')
-      + 'cdn.segment.io/analytics.js/v1/'
-      + key + '/analytics.min.js';
-    script.onload = script.onreadystatechange = function () {
-      return deferred.resolve();
-    };
-
-    // Insert our script next to the first script element.
-    var first = document.getElementsByTagName('script')[0];
-    first.parentNode.insertBefore(script, first);
+      // Insert our script next to the first script element.
+      var first = document.getElementsByTagName('script')[0];
+      first.parentNode.insertBefore(script, first);
+    }
 
     return deferred.promise;
   };
