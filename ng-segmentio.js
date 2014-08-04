@@ -1,4 +1,7 @@
+'use strict';
+
 angular.module('segmentio', ['ng'])
+
 .factory('segmentio', function($rootScope, $window, $location, $log, $q) {
   var service = {};
 
@@ -34,20 +37,18 @@ angular.module('segmentio', ['ng'])
   service.load = function(key) {
     var deferred = $q.defer();
 
-    if (document.getElementById('analytics-js'))
-      deferred.resolve();
-    else {
+    if (document.getElementById('analytics-js')) {
+      deferred.resolve($window.analytics);
+
+    } else {
       // Create an async script element based on your key.
       var script = document.createElement('script');
       script.type = 'text/javascript';
       script.id = 'analytics-js';
       script.async = true;
-      script.src = ('https:' === document.location.protocol
-        ? 'https://' : 'http://')
-        + 'cdn.segment.io/analytics.js/v1/'
-        + key + '/analytics.min.js';
+      script.src = '//cdn.segment.io/analytics.js/v1/' + key + '/analytics.min.js';
       script.onload = script.onreadystatechange = function () {
-        deferred.resolve();
+        deferred.resolve($window.analytics);
       };
 
       // Insert our script next to the first script element.
@@ -62,11 +63,10 @@ angular.module('segmentio', ['ng'])
   $window.analytics.SNIPPET_VERSION = '2.0.9';
 
   // Listening to $viewContentLoaded event to track pageview
-  $rootScope.$on('$viewContentLoaded', function() {
-    if (service.location != $location.path()) {
-      service.location = $location.path();
-      service.page(service.location);
-    }
+  $rootScope.$watch(function() {
+    return $location.path();
+  }, function(value) {
+    service.page(value);
   });
 
   return service;

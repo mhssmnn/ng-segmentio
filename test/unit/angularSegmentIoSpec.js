@@ -16,7 +16,7 @@ describe('Segment IO', function () {
   xit('should call API when initialized', inject(function ($window, segmentio) {
     waitsFor(function() {
         return $window.analytics.initialized == true;
-    }, "Segmentio never loaded", 10000);
+    }, 'Segmentio never loaded', 10000);
 
     $window.analytics.track = function() {};
     spyOn($window.analytics, 'track');
@@ -61,9 +61,9 @@ describe('Segment IO', function () {
   }));
 
   xit('should listen to $viewContentLoaded', inject(function (segmentio, $rootScope) {
-    spyOn(segmentio, "pageview");
+    spyOn(segmentio, 'page');
     $rootScope.$broadcast('$viewContentLoaded');
-    expect(segmentio.pageview).toHaveBeenCalled();
+    expect(segmentio.page).toHaveBeenCalled();
   }));
 
   it('should load the API when called with api key', inject(function ($window, segmentio) {
@@ -71,7 +71,7 @@ describe('Segment IO', function () {
 
     waitsFor(function() {
         return $window.analytics.initialized == true;
-    }, "Segmentio never loaded", 10000);
+    }, 'Segmentio never loaded', 10000);
 
     runs(function () {
       expect($window.analytics).toBeDefined();
