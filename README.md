@@ -23,7 +23,7 @@ app.config(function($stateProvider) {
     }
   });
 });
-
+```
 
 3) Now just have analytics to be injected in your controller.
 
