@@ -2,7 +2,8 @@
 
 angular.module('segmentio', ['ng'])
 
-.factory('segmentio', function($rootScope, $window, $location, $log, $q) {
+.factory('segmentio', ['$rootScope', '$window', '$location', '$log', '$q',
+  function($rootScope, $window, $location, $log, $q) {
   var service = {};
 
   $window.analytics = $window.analytics || [];
@@ -63,4 +64,4 @@ angular.module('segmentio', ['ng'])
   $window.analytics.SNIPPET_VERSION = '2.0.9';
 
   return service;
-});
+}]);
